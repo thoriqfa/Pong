@@ -8,6 +8,7 @@ class Paddle(pygame.sprite.Sprite):
         self.image = pygame.Surface([width, height])
         self.image.fill(BLACK)
         self.image.set_colorkey(BLACK)
+        self.height = height
 
         #draw the paddle
         pygame.draw.rect(self.image, color, [0, 0, width, height])
