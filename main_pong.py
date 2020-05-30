@@ -35,6 +35,10 @@ gameOn = True
 #clock controls how fast screen updates
 clock = pygame.time.Clock()
 
+#player score
+scoreA = 0
+scoreB = 0
+
 #Main
 while gameOn:
 
@@ -62,8 +66,10 @@ while gameOn:
     #hit the wall
     if ball.rect.x >= 690:
         ball.velocity[0] = -ball.velocity[0]
+        scoreA += 1
     if ball.rect.x <= 0:
         ball.velocity[0] = -ball.velocity[0]
+        scoreB += 1
     if ball.rect.y > 490:
         ball.velocity[1] = -ball.velocity[1]
     if ball.rect.y < 0:
@@ -77,6 +83,13 @@ while gameOn:
     screen.fill(BLACK)
     pygame.draw.line(screen, WHITE, [349, 0], [349, 500], 5)
     all_sprite_list.draw(screen)
+
+    #display scores
+    font = pygame.font.Font(None, 74)
+    text = font.render(str(scoreA), 1, WHITE)
+    screen.blit(text, (250,10))
+    text = font.render(str(scoreB), 1, WHITE)
+    screen.blit(text, (420,10))
 
     #update screen with whats been drawn
     pygame.display.flip()
