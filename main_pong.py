@@ -1,6 +1,6 @@
 import pygame
-from paddle import Paddle
-from ball import Ball
+from agents import RandomAgent, HumanAgent
+from pong_objects import Paddle, Ball
 pygame.init()
 
 #Defining base color
@@ -29,6 +29,10 @@ all_sprite_list.add(paddleA)
 all_sprite_list.add(paddleB)
 all_sprite_list.add(ball)
 
+#player agents
+player_random = RandomAgent(3)
+player_human = HumanAgent()
+
 #Loop while true
 gameOn = True
 
@@ -50,7 +54,7 @@ while gameOn:
             if event.key == pygame.K_x:
                 gameOn = False
     
-    #game logic
+    ##game logic
     keys = pygame.key.get_pressed()
     if keys[pygame.K_w]:
         paddleA.moveUp(5)
@@ -61,6 +65,25 @@ while gameOn:
     if keys[pygame.K_DOWN]:
         paddleB.moveDown(5)
     
+    '''
+    #random player move
+    random_action = player_random.choose_action()
+    if random_action == 1:
+        paddleA.moveUp(5)
+    elif random_action == 2:
+        paddleA.moveDown(5)
+    else:
+        pass
+
+    human_action = player_human.choose_action()
+    if human_action == 1:
+        paddleB.moveUp(5)
+    elif human_action == 2:
+        paddleB.moveDown(5)
+    else:
+        pass
+    '''
+
     all_sprite_list.update()
 
     #hit the wall
@@ -79,6 +102,7 @@ while gameOn:
     if pygame.sprite.collide_rect(ball, paddleA) or pygame.sprite.collide_rect(ball, paddleB):
         ball.bounce()
 
+    
     #draw things
     screen.fill(BLACK)
     pygame.draw.line(screen, WHITE, [349, 0], [349, 500], 5)
@@ -93,9 +117,10 @@ while gameOn:
 
     #update screen with whats been drawn
     pygame.display.flip()
-
+    
+    #print("Score A: ", scoreA, " Score B: ", scoreB)
+    
     #limit to 60 fps
     clock.tick(60)
 
-pygame.quit()
-    
+pygame.quit() 
