@@ -1,12 +1,17 @@
 import random
 import pygame
 import numpy as np
-import random
 from collections import deque
-from keras.models import Sequential
+from keras.models import Sequential, load_model
 from keras.layers import Dense
 from keras.optimizers import Adam
 
+'''
+from numpy.random import seed
+seed(42)                        # keras seed fixing
+import tensorflow as tf
+tf.random.set_seed(42)          # tensorflow seed fixing
+'''
 #pygame.init()
 
 class RandomAgent:
@@ -62,6 +67,11 @@ class DQNAgent:
         ])
         model.compile(optimizer= Adam(learning_rate=self.learning_rate), loss ="mse")
         return model
+
+    def q_from_load_model(self, model):
+        self.epsilon = self.epsilon_min
+        self.q = load_model(model, compile=True)
+        self.q_target.set_weights(self.q.get_weights())
 
     def choose_action(self, observation):
         if np.random.random() < self.epsilon:

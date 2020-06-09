@@ -81,20 +81,19 @@ class Pong:
         if self.ball.rect.y < 0:
             self.ball.velocity[1] = -self.ball.velocity[1]
 
+        if pygame.sprite.collide_rect(self.ball, self.paddleA) and self.ball.velocity[0] < 0:
+            reward += 1
+
         #ball bounces randomly when hitting paddle
         if pygame.sprite.collide_rect(self.ball, self.paddleA) or pygame.sprite.collide_rect(self.ball, self.paddleB):
             self.ball.bounce()
-        
-        if pygame.sprite.collide_rect(self.ball, self.paddleA) and self.ball.rect.x >= 25:
-            reward += 1
 
         #update sprites state
         self.all_sprite_list.update()
 
-        #next state
+        #returning reward, next state, done
         next_state = self.get_state()
         done = False if self.scoreA < 5 else True
-        #returning state, action, reward, next state, done
         return reward, next_state, done
 
     def display(self):
