@@ -7,14 +7,14 @@ import matplotlib.pyplot as plt
 player_random = agents.RandomAgent(3)
 player_dqn = agents.DQNAgent(5, 3)
 
-
+'''
 #player dqn uses saved model
 model = "q_model_4_5"
 player_dqn.q_from_load_model(model)
 print("Model loaded.")
+'''
 
-
-num_play = 10
+num_play = 100
 clock = pygame.time.Clock()
 scores = []
 epsilons = []
@@ -62,14 +62,13 @@ for i in range(num_play):
 
 print(player_dqn.q.get_weights())
 #save trained model to disk
-player_dqn.q.save("q_model_4_6")
+player_dqn.q.save("q_model_4_7")
 print("Q model saved")
-'''
 
-plt.plot(scores, color="red", label="Scores")
+
+plt.plot(scores, color="red", label="Scores")x
 plt.plot(epsilons, color="blue", label="Epsilons")
 plt.xlabel("Episodes")
 plt.legend()
-plt.savefig("Pong_training_200_8jun_3.png", dpi=150)
+plt.savefig("Pong_training_200_9jun_1.png", dpi=150)
 plt.show()
-'''
